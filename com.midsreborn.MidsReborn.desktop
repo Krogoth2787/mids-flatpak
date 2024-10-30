@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=MidsReborn
+Type=Application
+exec=flatpak run com.midsreborn.MidsReborn
+Comment=A build planner for City of Heroes
+Icon=com.midsreborn.MidsReborn
