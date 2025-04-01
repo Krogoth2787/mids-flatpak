@@ -1,0 +1,11 @@
+prefix=/app
+exec_prefix=${prefix}
+libdir=${prefix}/lib32
+includedir=${prefix}/include/samba-4.0
+
+Name: Samba libnetapi
+Description: A library to control CIFS servers
+Version: 1.0.0
+Libs: -Wl,-rpath,/app/lib32 -L${libdir} -lnetapi
+Cflags: -I${includedir}
+URL: http://www.samba.org/

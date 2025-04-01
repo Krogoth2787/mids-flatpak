@@ -1,0 +1,10 @@
+prefix=/app
+exec_prefix=${prefix}
+libdir=${prefix}/lib32
+includedir=${prefix}/include/samba-4.0
+
+Name: samdb
+Description: Sam Database
+Version: 0.0.1
+Libs: -Wl,-rpath,/app/lib32 -L${libdir} -lsamdb
+Cflags: -I${includedir} -DHAVE_IMMEDIATE_STRUCTURES=1

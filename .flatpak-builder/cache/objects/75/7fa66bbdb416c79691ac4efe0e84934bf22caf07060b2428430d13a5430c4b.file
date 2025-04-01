@@ -1,0 +1,5 @@
+[Application]
+name=com.midsreborn.MidsReborn
+runtime=org.freedesktop.Platform/x86_64/24.08
+sdk=org.freedesktop.Sdk/x86_64/24.08
+base=app/org.winehq.Wine/x86_64/stable-24.08
