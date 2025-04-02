@@ -1,16 +1,16 @@
 app-id: com.midsreborn.MidsReborn
 runtime: org.freedesktop.Platform
-runtime-version: '24.08'
+runtime-version: '23.08'
 sdk: org.freedesktop.Sdk
 base: org.winehq.Wine
-base-version: stable-24.08
+base-version: stable-23.08
 command: mids.sh
 
 # Support 32-bit at runtime
 add-extensions:
     org.freedesktop.Platform.Compat.i386:
         directory: lib/i386-linux-gnu
-        version: '24.08'
+        version: '23.08'
 
 # Support 32-bit at buildtime
 sdk-extensions:
@@ -50,6 +50,14 @@ modules:
           - mkdir -p /app/extensions/Plugins
           - mkdir -p /app/lib64
           - mkdir -p /app/lib32
+
+    - name: segoe
+      buildsystem: simple
+      build-commands:
+        - unzip -q segoeui.zip -d /app/share/wine/fonts
+      sources:
+        - type: file
+          path: segoeui.zip
 
     - name: midsinstaller
       buildsystem: simple

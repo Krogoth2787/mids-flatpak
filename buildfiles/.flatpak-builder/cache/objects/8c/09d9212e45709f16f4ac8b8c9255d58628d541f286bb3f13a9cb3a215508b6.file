@@ -1,0 +1,11 @@
+prefix=/app
+exec_prefix=${prefix}
+libdir=/app/lib32
+includedir=${prefix}/include
+
+Name: mit-krb5-gssapi
+Description: Kerberos implementation of the GSSAPI
+Version: 1.21.3
+Requires.private: mit-krb5
+Cflags: -I${includedir}
+Libs: -L${libdir} -lgssapi_krb5
