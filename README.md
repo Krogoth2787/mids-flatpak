@@ -32,6 +32,10 @@ Each Launch thereafter will simply launch mids.
 Mids will take approximately 15 seconds to launch, with no splash screen. (Be patient)
 
 ## Updating
+After downloading the MidsReborn.flatpak from the newest release run:
+   `Flatpak install --user MidsReborn.flatpak`
+As in the installation instructions above. It will update the flatpak files to match the newest version, MidsReborn itself and your options will remain as they are.
+
 As of right now the updater contained within Mids is functioning.
 
 If an update occurs that prevents it from functioning, I will update this flatpak to the most recent version.
