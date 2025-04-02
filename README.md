@@ -1,6 +1,6 @@
 # MidsReborn Flatpak (Unofficial)
 An unofficial Flatpak container for the MidsReborn Character Builder:
-[MidsReborn Website](https://midsreborn.com)
+[MidsReborn Website](https://midsreborn.com)  
 [MidsReborn Github](https://github.com/LoadedCamel/MidsReborn)
 
 It is installed from the .zip archive, so all databases are accessible.
