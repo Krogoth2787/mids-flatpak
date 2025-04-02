@@ -1,5 +1,5 @@
 # MidsReborn Flatpak (Unofficial)
-An unofficial Flatpak container for the MidsReborn Character Builder:
+An unofficial Flatpak container for the MidsReborn Character Builder:  
 [MidsReborn Website](https://midsreborn.com)  
 [MidsReborn Github](https://github.com/LoadedCamel/MidsReborn)
 
