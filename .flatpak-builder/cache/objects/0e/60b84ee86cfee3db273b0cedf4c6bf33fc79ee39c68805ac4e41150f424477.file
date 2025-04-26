@@ -1,2 +1,0 @@
-#! /bin/sh
-"/app/lib/p7zip/7z" "$@"

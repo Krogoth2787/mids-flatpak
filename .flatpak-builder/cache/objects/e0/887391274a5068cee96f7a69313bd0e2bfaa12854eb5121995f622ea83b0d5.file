@@ -1,5 +1,0 @@
-[Runtime]
-name=com.midsreborn.MidsReborn.Locale
-
-[ExtensionOf]
-ref=app/com.midsreborn.MidsReborn/x86_64/master

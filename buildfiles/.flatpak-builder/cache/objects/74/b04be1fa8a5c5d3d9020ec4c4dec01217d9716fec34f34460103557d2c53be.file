@@ -1,0 +1,616 @@
+{
+  "id" : "org.winehq.Wine",
+  "default-branch" : "stable-24.08",
+  "runtime" : "org.freedesktop.Platform",
+  "runtime-version" : "24.08",
+  "runtime-commit" : "b97df3fb13defe80985ee80dd2e2cdab40c5037f70a5d7d6c24b8414b92f77bc",
+  "sdk" : "org.freedesktop.Sdk",
+  "sdk-commit" : "214b60de67d1b8ef5dea079c7170dd83481112efc266818d1231999f7b82058f",
+  "build-options" : {
+    "append-path" : "/usr/lib/sdk/mingw-w64/bin"
+  },
+  "command" : "wine",
+  "modules" : [
+    {
+      "name" : "libusb",
+      "sources" : [
+        {
+          "url" : "https://github.com/libusb/libusb/releases/download/v1.0.28/libusb-1.0.28.tar.bz2",
+          "sha256" : "966bb0d231f94a474eaae2e67da5ec844d3527a1f386456394ff432580634b29",
+          "x-checker-data" : {
+            "type" : "anitya",
+            "project-id" : 1749,
+            "stable-only" : true,
+            "url-template" : "https://github.com/libusb/libusb/releases/download/v$version/libusb-$version.tar.bz2"
+          },
+          "type" : "archive"
+        }
+      ]
+    },
+    {
+      "name" : "libusb-32bit",
+      "sources" : [
+        {
+          "url" : "https://github.com/libusb/libusb/releases/download/v1.0.28/libusb-1.0.28.tar.bz2",
+          "sha256" : "966bb0d231f94a474eaae2e67da5ec844d3527a1f386456394ff432580634b29",
+          "x-checker-data" : {
+            "type" : "anitya",
+            "project-id" : 1749,
+            "stable-only" : true,
+            "url-template" : "https://github.com/libusb/libusb/releases/download/v$version/libusb-$version.tar.bz2"
+          },
+          "type" : "archive"
+        }
+      ],
+      "build-options" : {
+        "arch" : {
+          "x86_64" : {
+            "ldflags" : "-L/app/lib32 -Wl,-rpath-link=/app/lib32 -Wl,-z,relro,-z,now -Wl,--as-needed",
+            "ldflags-override" : true,
+            "libdir" : "/app/lib32",
+            "env" : {
+              "CC" : "ccache i686-unknown-linux-gnu-gcc",
+              "CXX" : "ccache i686-unknown-linux-gnu-g++"
+            },
+            "append-path" : "/usr/lib/sdk/toolchain-i386/bin",
+            "prepend-pkg-config-path" : "/app/lib32/pkgconfig:/usr/lib/i386-linux-gnu/pkgconfig"
+          }
+        }
+      }
+    },
+    {
+      "name" : "krb5",
+      "subdir" : "src",
+      "config-opts" : [
+        "--localstatedir=/var/lib",
+        "--sbindir=${FLATPAK_DEST}/bin",
+        "--disable-static",
+        "--disable-rpath"
+      ],
+      "sources" : [
+        {
+          "url" : "https://github.com/krb5/krb5/archive/refs/tags/krb5-1.21.3-final.tar.gz",
+          "sha256" : "2157d92020d408ed63ebcd886a92d1346a1383b0f91123a0473b4f69b4a24861",
+          "x-checker-data" : {
+            "type" : "anitya",
+            "project-id" : 13287,
+            "stable-only" : true,
+            "url-template" : "https://github.com/krb5/krb5/archive/refs/tags/krb5-$version.tar.gz"
+          },
+          "type" : "archive"
+        },
+        {
+          "dest" : "src",
+          "commands" : [
+            "autoreconf -si"
+          ],
+          "type" : "shell"
+        }
+      ],
+      "cleanup" : [
+        "/bin",
+        "/share/et",
+        "/share/examples"
+      ]
+    },
+    {
+      "name" : "krb5-32bit",
+      "subdir" : "src",
+      "config-opts" : [
+        "--localstatedir=/var/lib",
+        "--sbindir=${FLATPAK_DEST}/bin",
+        "--disable-static",
+        "--disable-rpath"
+      ],
+      "sources" : [
+        {
+          "url" : "https://github.com/krb5/krb5/archive/refs/tags/krb5-1.21.3-final.tar.gz",
+          "sha256" : "2157d92020d408ed63ebcd886a92d1346a1383b0f91123a0473b4f69b4a24861",
+          "x-checker-data" : {
+            "type" : "anitya",
+            "project-id" : 13287,
+            "stable-only" : true,
+            "url-template" : "https://github.com/krb5/krb5/archive/refs/tags/krb5-$version.tar.gz"
+          },
+          "type" : "archive"
+        },
+        {
+          "dest" : "src",
+          "commands" : [
+            "autoreconf -si"
+          ],
+          "type" : "shell"
+        }
+      ],
+      "build-options" : {
+        "arch" : {
+          "x86_64" : {
+            "ldflags" : "-L/app/lib32 -Wl,-rpath-link=/app/lib32 -Wl,-z,relro,-z,now -Wl,--as-needed",
+            "ldflags-override" : true,
+            "libdir" : "/app/lib32",
+            "env" : {
+              "CC" : "ccache i686-unknown-linux-gnu-gcc",
+              "CXX" : "ccache i686-unknown-linux-gnu-g++"
+            },
+            "append-path" : "/usr/lib/sdk/toolchain-i386/bin",
+            "prepend-pkg-config-path" : "/app/lib32/pkgconfig:/usr/lib/i386-linux-gnu/pkgconfig"
+          }
+        }
+      },
+      "cleanup" : [
+        "/bin",
+        "/share/et",
+        "/share/examples"
+      ]
+    },
+    {
+      "name" : "krb5-config",
+      "buildsystem" : "simple",
+      "sources" : [
+        {
+          "path" : "krb5.conf",
+          "type" : "file"
+        }
+      ],
+      "build-commands" : [
+        "install -Dm 644 krb5.conf -t /app/etc"
+      ]
+    },
+    {
+      "name" : "unixodbc",
+      "sources" : [
+        {
+          "url" : "https://github.com/lurcher/unixODBC/releases/download/2.3.12/unixODBC-2.3.12.tar.gz",
+          "sha256" : "f210501445ce21bf607ba51ef8c125e10e22dffdffec377646462df5f01915ec",
+          "x-checker-data" : {
+            "type" : "anitya",
+            "project-id" : 7344,
+            "stable-only" : true,
+            "url-template" : "https://github.com/lurcher/unixODBC/releases/download/$version/unixODBC-$version.tar.gz"
+          },
+          "type" : "archive"
+        }
+      ],
+      "cleanup" : [
+        "/bin"
+      ]
+    },
+    {
+      "name" : "unixodbc-32bit",
+      "sources" : [
+        {
+          "url" : "https://github.com/lurcher/unixODBC/releases/download/2.3.12/unixODBC-2.3.12.tar.gz",
+          "sha256" : "f210501445ce21bf607ba51ef8c125e10e22dffdffec377646462df5f01915ec",
+          "x-checker-data" : {
+            "type" : "anitya",
+            "project-id" : 7344,
+            "stable-only" : true,
+            "url-template" : "https://github.com/lurcher/unixODBC/releases/download/$version/unixODBC-$version.tar.gz"
+          },
+          "type" : "archive"
+        }
+      ],
+      "build-options" : {
+        "arch" : {
+          "x86_64" : {
+            "ldflags" : "-L/app/lib32 -Wl,-rpath-link=/app/lib32 -Wl,-z,relro,-z,now -Wl,--as-needed",
+            "ldflags-override" : true,
+            "libdir" : "/app/lib32",
+            "env" : {
+              "CC" : "ccache i686-unknown-linux-gnu-gcc",
+              "CXX" : "ccache i686-unknown-linux-gnu-g++"
+            },
+            "append-path" : "/usr/lib/sdk/toolchain-i386/bin",
+            "prepend-pkg-config-path" : "/app/lib32/pkgconfig:/usr/lib/i386-linux-gnu/pkgconfig"
+          }
+        }
+      },
+      "cleanup" : [
+        "/bin"
+      ]
+    },
+    {
+      "name" : "wine",
+      "config-opts" : [
+        "--disable-tests",
+        "--with-x",
+        "--with-wayland",
+        "--with-pulse",
+        "--with-dbus",
+        "--without-oss"
+      ],
+      "make-install-args" : [
+        "LDCONFIG=/bin/true",
+        "UPDATE_DESKTOP_DATABASE=/bin/true",
+        "INSTALL_PROGRAM_FLAGS=-s"
+      ],
+      "sources" : [
+        {
+          "url" : "https://dl.winehq.org/wine/source/10.0/wine-10.0.tar.xz",
+          "sha256" : "c5e0b3f5f7efafb30e9cd4d9c624b85c583171d33549d933cd3402f341ac3601",
+          "x-checker-data" : {
+            "type" : "html",
+            "url" : "https://gitlab.winehq.org/wine/wine/-/raw/stable/VERSION",
+            "version-pattern" : "Wine version (\\d[\\d\\w\\.-]+\\d)",
+            "url-template" : "https://dl.winehq.org/wine/source/$major.$minor/wine-$version.tar.xz",
+            "is-main-source" : true
+          },
+          "x-addons-url" : "https://gitlab.winehq.org/wine/wine/-/raw/stable/dlls/appwiz.cpl/addons.c",
+          "type" : "archive"
+        }
+      ],
+      "build-options" : {
+        "env" : {
+          "LIBDIR" : "lib"
+        },
+        "arch" : {
+          "x86_64" : {
+            "libdir" : "/app/lib",
+            "config-opts" : [
+              "--enable-win64",
+              "--with-mingw=ccache x86_64-w64-mingw32-gcc"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name" : "wine-32bit",
+      "config-opts" : [
+        "--disable-tests",
+        "--with-x",
+        "--with-wayland",
+        "--with-pulse",
+        "--with-dbus",
+        "--without-oss"
+      ],
+      "make-install-args" : [
+        "LDCONFIG=/bin/true",
+        "UPDATE_DESKTOP_DATABASE=/bin/true",
+        "INSTALL_PROGRAM_FLAGS=-s"
+      ],
+      "only-arches" : [
+        "x86_64"
+      ],
+      "sources" : [
+        {
+          "url" : "https://dl.winehq.org/wine/source/10.0/wine-10.0.tar.xz",
+          "sha256" : "c5e0b3f5f7efafb30e9cd4d9c624b85c583171d33549d933cd3402f341ac3601",
+          "x-checker-data" : {
+            "type" : "html",
+            "url" : "https://gitlab.winehq.org/wine/wine/-/raw/stable/VERSION",
+            "version-pattern" : "Wine version (\\d[\\d\\w\\.-]+\\d)",
+            "url-template" : "https://dl.winehq.org/wine/source/$major.$minor/wine-$version.tar.xz",
+            "is-main-source" : true
+          },
+          "x-addons-url" : "https://gitlab.winehq.org/wine/wine/-/raw/stable/dlls/appwiz.cpl/addons.c",
+          "type" : "archive"
+        }
+      ],
+      "build-options" : {
+        "env" : {
+          "LIBDIR" : "lib32"
+        },
+        "arch" : {
+          "x86_64" : {
+            "ldflags" : "-L/app/lib32 -Wl,-rpath-link=/app/lib32 -Wl,-z,relro,-z,now -Wl,--as-needed",
+            "ldflags-override" : true,
+            "libdir" : "/app/lib32",
+            "env" : {
+              "CC" : "ccache i686-unknown-linux-gnu-gcc",
+              "CXX" : "ccache i686-unknown-linux-gnu-g++"
+            },
+            "append-path" : "/usr/lib/sdk/toolchain-i386/bin",
+            "prepend-pkg-config-path" : "/app/lib32/pkgconfig:/usr/lib/i386-linux-gnu/pkgconfig"
+          }
+        },
+        "config-opts" : [
+          "--bindir=${FLATPAK_DEST}/bin32",
+          "--with-mingw=ccache i686-w64-mingw32-gcc"
+        ]
+      },
+      "cleanup" : [
+        "/bin32"
+      ],
+      "post-install" : [
+        "mv ${FLATPAK_DEST}/bin32/wine{,-preloader} ${FLATPAK_DEST}/bin/"
+      ]
+    },
+    {
+      "name" : "winetricks",
+      "no-autogen" : true,
+      "make-args" : [
+        "PREFIX=/app"
+      ],
+      "make-install-args" : [
+        "PREFIX=/app"
+      ],
+      "sources" : [
+        {
+          "url" : "https://github.com/Winetricks/winetricks.git",
+          "commit" : "f228228b50d6b4f41181634b3678f38a56d5c6f5",
+          "x-checker-data" : {
+            "type" : "git",
+            "tag-pattern" : "^(\\d+)$"
+          },
+          "type" : "git"
+        }
+      ],
+      "modules" : [
+        {
+          "name" : "p7zip",
+          "no-autogen" : true,
+          "make-args" : [
+            "all2",
+            "DEST_HOME=/app",
+            "DEST_BIN=/app/bin",
+            "DEST_SHARE=/app/lib/p7zip",
+            "DEST_MAN=/app/share/man"
+          ],
+          "make-install-args" : [
+            "DEST_HOME=/app",
+            "DEST_BIN=/app/bin",
+            "DEST_SHARE=/app/lib/p7zip",
+            "DEST_MAN=/app/share/man"
+          ],
+          "sources" : [
+            {
+              "url" : "https://github.com/p7zip-project/p7zip/archive/v17.06/p7zip-v17.06.tar.gz",
+              "sha256" : "c35640020e8f044b425d9c18e1808ff9206dc7caf77c9720f57eb0849d714cd1",
+              "x-checker-data" : {
+                "type" : "anitya",
+                "project-id" : 2583,
+                "stable-only" : true,
+                "url-template" : "https://github.com/p7zip-project/p7zip/archive/v$version/p7zip-v$version.tar.gz"
+              },
+              "type" : "archive"
+            }
+          ]
+        },
+        {
+          "name" : "cabextract",
+          "sources" : [
+            {
+              "url" : "https://www.cabextract.org.uk/cabextract-1.11.tar.gz",
+              "sha256" : "b5546db1155e4c718ff3d4b278573604f30dd64c3c5bfd4657cd089b823a3ac6",
+              "x-checker-data" : {
+                "type" : "anitya",
+                "project-id" : 245,
+                "stable-only" : true,
+                "url-template" : "https://www.cabextract.org.uk/cabextract-$version.tar.gz"
+              },
+              "type" : "archive"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name" : "wine-gecko",
+      "buildsystem" : "simple",
+      "sources" : [
+        {
+          "only-arches" : [
+            "i386",
+            "x86_64"
+          ],
+          "url" : "https://dl.winehq.org/wine/wine-gecko/2.47.4/wine-gecko-2.47.4-x86.tar.xz",
+          "sha256" : "2cfc8d5c948602e21eff8a78613e1826f2d033df9672cace87fed56e8310afb6",
+          "strip-components" : 0,
+          "x-checker-data" : {
+            "type" : "html",
+            "url" : "https://gitlab.winehq.org/wine/wine/-/raw/stable/dlls/appwiz.cpl/addons.c",
+            "version-pattern" : "GECKO_VERSION\\s+\"(\\d[\\d\\.]+\\d)\"",
+            "url-template" : "https://dl.winehq.org/wine/wine-gecko/$version/wine-gecko-$version-x86.tar.xz"
+          },
+          "type" : "archive"
+        },
+        {
+          "only-arches" : [
+            "x86_64"
+          ],
+          "url" : "https://dl.winehq.org/wine/wine-gecko/2.47.4/wine-gecko-2.47.4-x86_64.tar.xz",
+          "sha256" : "fd88fc7e537d058d7a8abf0c1ebc90c574892a466de86706a26d254710a82814",
+          "strip-components" : 0,
+          "x-checker-data" : {
+            "type" : "html",
+            "url" : "https://gitlab.winehq.org/wine/wine/-/raw/stable/dlls/appwiz.cpl/addons.c",
+            "version-pattern" : "GECKO_VERSION\\s+\"(\\d[\\d\\.]+\\d)\"",
+            "url-template" : "https://dl.winehq.org/wine/wine-gecko/$version/wine-gecko-$version-x86_64.tar.xz"
+          },
+          "type" : "archive"
+        },
+        {
+          "path" : "org.winehq.Wine.gecko.metainfo.xml",
+          "type" : "file"
+        }
+      ],
+      "post-install" : [
+        "install -Dm644 -t ${FLATPAK_DEST}/share/wine/gecko/share/metainfo/ ${FLATPAK_ID}.gecko.metainfo.xml"
+      ],
+      "build-commands" : [
+        "mkdir -p ${FLATPAK_DEST}/share/wine/gecko/",
+        "cp -a wine-gecko-* ${FLATPAK_DEST}/share/wine/gecko/"
+      ]
+    },
+    {
+      "name" : "wine-mono",
+      "buildsystem" : "simple",
+      "sources" : [
+        {
+          "url" : "https://dl.winehq.org/wine/wine-mono/9.4.0/wine-mono-9.4.0-x86.tar.xz",
+          "sha256" : "fd772219aacf46b825fa891a647af4a9ddf8439320101c231918b2037bf13858",
+          "strip-components" : 0,
+          "x-checker-data" : {
+            "type" : "html",
+            "url" : "https://gitlab.winehq.org/wine/wine/-/raw/stable/dlls/appwiz.cpl/addons.c",
+            "version-pattern" : "MONO_VERSION\\s+\"(\\d[\\d\\.]+\\d)\"",
+            "url-template" : "https://dl.winehq.org/wine/wine-mono/$version/wine-mono-$version-x86.tar.xz"
+          },
+          "type" : "archive"
+        },
+        {
+          "path" : "org.winehq.Wine.mono.metainfo.xml",
+          "type" : "file"
+        }
+      ],
+      "post-install" : [
+        "install -Dm644 -t ${FLATPAK_DEST}/share/wine/mono/share/metainfo/ ${FLATPAK_ID}.mono.metainfo.xml"
+      ],
+      "build-commands" : [
+        "mkdir -p ${FLATPAK_DEST}/share/wine/mono/",
+        "cp -a wine-mono-* ${FLATPAK_DEST}/share/wine/mono/"
+      ]
+    },
+    {
+      "name" : "bundle-setup",
+      "buildsystem" : "simple",
+      "sources" : [
+        {
+          "path" : "ld.so.conf",
+          "type" : "file"
+        },
+        {
+          "path" : "wine-logo.svg",
+          "type" : "file"
+        },
+        {
+          "path" : "org.winehq.Wine.appdata.xml",
+          "type" : "file"
+        }
+      ],
+      "build-commands" : [
+        "install -Dm644 -t ${FLATPAK_DEST}/etc ld.so.conf",
+        "mkdir -p ${FLATPAK_DEST}/{,lib/debug/}lib/i386-linux-gnu/GL",
+        "install -Dm644 ${FLATPAK_ID}.appdata.xml -t ${FLATPAK_DEST}/share/appdata",
+        "icondir=${FLATPAK_DEST}/share/icons/hicolor\ninstall -Dm644 wine-logo.svg ${icondir}/scalable/apps/wine.svg\nfor s in 64 128 256; do\n  mkdir -p ${icondir}/${s}x${s}/apps\n  rsvg-convert -h ${s} -a -o ${icondir}/${s}x${s}/apps/wine.png ${icondir}/scalable/apps/wine.svg\ndone\n"
+      ]
+    }
+  ],
+  "cleanup" : [
+    "*.a",
+    "*.la",
+    "/share/doc",
+    "/share/man",
+    "/bin/function_grep.pl",
+    "/bin/widl",
+    "/bin/winebuild",
+    "/bin/winecpp",
+    "/bin/winedump",
+    "/bin/wineg++",
+    "/bin/winegcc",
+    "/bin/winemaker",
+    "/bin/wmc",
+    "/bin/wrc",
+    "/include",
+    "/lib/pkgconfig",
+    "/lib32/pkgconfig",
+    "/lib/wine/*.def",
+    "/lib32/wine/*.def"
+  ],
+  "cleanup-commands" : [
+    "mkdir -p ${FLATPAK_DEST}/lib{,32}/ffmpeg"
+  ],
+  "separate-locales" : false,
+  "sdk-extensions" : [
+    "org.freedesktop.Sdk.Compat.i386",
+    "org.freedesktop.Sdk.Extension.toolchain-i386",
+    "org.freedesktop.Sdk.Extension.mingw-w64"
+  ],
+  "finish-args" : [
+    "--share=ipc",
+    "--socket=x11",
+    "--socket=wayland",
+    "--device=all",
+    "--socket=pulseaudio",
+    "--share=network",
+    "--allow=multiarch",
+    "--allow=devel",
+    "--system-talk-name=org.freedesktop.UDisks2",
+    "--system-talk-name=org.freedesktop.NetworkManager",
+    "--filesystem=xdg-desktop",
+    "--filesystem=xdg-documents",
+    "--filesystem=xdg-pictures",
+    "--filesystem=xdg-music",
+    "--filesystem=xdg-videos",
+    "--filesystem=xdg-download",
+    "--env=WINEPREFIX=/var/data/wine",
+    "--env=GST_PLUGIN_SYSTEM_PATH=/app/lib32/gstreamer-1.0:/app/lib/gstreamer-1.0:/usr/lib/i386-linux-gnu/gstreamer-1.0:/usr/lib/x86_64-linux-gnu/gstreamer-1.0"
+  ],
+  "rename-desktop-file" : "wine.desktop",
+  "rename-icon" : "wine",
+  "add-extensions" : {
+    "org.freedesktop.Platform.Compat.i386" : {
+      "directory" : "lib/i386-linux-gnu",
+      "version" : "24.08"
+    },
+    "org.freedesktop.Platform.Compat.i386.Debug" : {
+      "directory" : "lib/debug/lib/i386-linux-gnu",
+      "no-autodownload" : true,
+      "version" : "24.08"
+    },
+    "org.freedesktop.Platform.GL32" : {
+      "directory" : "lib/i386-linux-gnu/GL",
+      "add-ld-path" : "lib",
+      "download-if" : "active-gl-driver",
+      "enable-if" : "active-gl-driver",
+      "autoprune-unless" : "active-gl-driver",
+      "merge-dirs" : "vulkan/icd.d;glvnd/egl_vendor.d;egl/egl_external_platform.d;OpenCL/vendors;lib/dri;lib/d3d;lib/gbm;vulkan/explicit_layer.d;vulkan/implicit_layer.d",
+      "no-autodownload" : true,
+      "version" : "1.4",
+      "versions" : "24.08;1.4"
+    },
+    "org.freedesktop.Platform.GL32.Debug" : {
+      "directory" : "lib/debug/lib/i386-linux-gnu/GL",
+      "enable-if" : "active-gl-driver",
+      "autoprune-unless" : "active-gl-driver",
+      "merge-dirs" : "vulkan/icd.d;glvnd/egl_vendor.d;egl/egl_external_platform.d;OpenCL/vendors;lib/dri;lib/d3d;lib/gbm;vulkan/explicit_layer.d;vulkan/implicit_layer.d",
+      "no-autodownload" : true,
+      "version" : "1.4",
+      "versions" : "24.08;1.4"
+    },
+    "org.freedesktop.Platform.VAAPI.Intel.i386" : {
+      "directory" : "lib/i386-linux-gnu/dri/intel-vaapi-driver",
+      "add-ld-path" : "lib",
+      "download-if" : "have-intel-gpu",
+      "autoprune-unless" : "have-intel-gpu",
+      "no-autodownload" : true,
+      "version" : "24.08",
+      "versions" : "24.08"
+    },
+    "org.freedesktop.Platform.ffmpeg-full" : {
+      "directory" : "lib/ffmpeg",
+      "add-ld-path" : ".",
+      "version" : "24.08"
+    },
+    "org.freedesktop.Platform.ffmpeg_full.i386" : {
+      "directory" : "lib32/ffmpeg",
+      "add-ld-path" : ".",
+      "version" : "24.08"
+    },
+    "org.winehq.Wine.gecko" : {
+      "directory" : "share/wine/gecko",
+      "bundle" : true
+    },
+    "org.winehq.Wine.mono" : {
+      "directory" : "share/wine/mono",
+      "bundle" : true
+    }
+  },
+  "source-date-epoch" : 1745414206,
+  "x-gl-version" : "1.4",
+  "x-extension-versions" : "stable;stable-24.08",
+  "x-gl-merge-dirs" : "vulkan/icd.d;glvnd/egl_vendor.d;egl/egl_external_platform.d;OpenCL/vendors;lib/dri;lib/d3d;lib/gbm;vulkan/explicit_layer.d;vulkan/implicit_layer.d",
+  "x-compat-i386-opts" : {
+    "prepend-pkg-config-path" : "/app/lib32/pkgconfig:/usr/lib/i386-linux-gnu/pkgconfig",
+    "ldflags" : "-L/app/lib32 -Wl,-rpath-link=/app/lib32 -Wl,-z,relro,-z,now -Wl,--as-needed",
+    "ldflags-override" : true,
+    "append-path" : "/usr/lib/sdk/toolchain-i386/bin",
+    "env" : {
+      "CC" : "ccache i686-unknown-linux-gnu-gcc",
+      "CXX" : "ccache i686-unknown-linux-gnu-g++"
+    },
+    "libdir" : "/app/lib32"
+  },
+  "x-gl-versions" : "24.08;1.4"
+}

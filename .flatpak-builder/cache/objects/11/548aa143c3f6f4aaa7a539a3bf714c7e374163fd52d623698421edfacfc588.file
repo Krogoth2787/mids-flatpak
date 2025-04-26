@@ -1,7 +1,0 @@
-[Desktop Entry]
-Name=MidsReborn
-Comment=A build planner for City of Heroes
-Exec=mids.sh
-Icon=com.midsreborn.MidsReborn
-Type=Application
-Categories=Game;

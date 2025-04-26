@@ -1,0 +1,46 @@
+[Application]
+name=com.midsreborn.MidsReborn
+runtime=org.freedesktop.Platform/x86_64/24.08
+sdk=org.freedesktop.Sdk/x86_64/24.08
+base=app/org.winehq.Wine/x86_64/stable-24.08
+command=mids.sh
+
+[Extension org.freedesktop.Platform.ffmpeg-full]
+directory=lib/ffmpeg
+add-ld-path=.
+version=24.08
+
+[Extension org.winehq.Wine.mono]
+directory=share/wine/mono
+version=stable-24.08
+
+[Extension org.winehq.Wine.gecko]
+directory=share/wine/gecko
+version=stable-24.08
+
+[Context]
+shared=network;ipc;
+sockets=x11;wayland;pulseaudio;fallback-x11;
+devices=dri;usb;
+features=multiarch;
+filesystems=host:create;
+persistent=~/.local/share/mids-flatpak;
+
+[Session Bus Policy]
+org.freedesktop.Flatpak=talk
+
+[Environment]
+WINEDEBUG=-all
+LD_LIBRARY_PATH=/app/lib:/app/lib32:/app/lib64:/app/lib/i386-linux-gnu:/app/lib/wine:/app/lib64/wine
+
+[Extension org.freedesktop.Platform.Compat.i386]
+directory=lib/i386-linux-gnu
+version=24.08
+
+[Extension com.midsreborn.MidsReborn.Locale]
+directory=share/runtime/locale
+autodelete=true
+locale-subset=true
+
+[Build]
+built-extensions=com.midsreborn.MidsReborn.Locale;

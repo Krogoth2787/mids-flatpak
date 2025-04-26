@@ -40,8 +40,10 @@ As of right now the updater contained within Mids is functioning.
 
 If an update occurs that prevents it from functioning, I will update this flatpak to the most recent version.
 
-### Notice of change in Flatpak base
-Due to an incompatability in the 24.08 base between wine and nvidia, I have downgraded to base to 23.08. If I see changes that corrects this I will return the flatpak to 24.08.
+### Change Notifications
+The previous issue with Flatpak 24.08, Wine and NVidia has been resolved, the flatpak has returned to the 24.08 base.
+
+The flatpak now includes the installation for Microsoft .Net8, so it can run MidsReborn 3.7.6. At the time of this update there are some known bugs in this version, so you may consider holding off on the 3.7.6 update until they are resolved.
 
 ### Known Bugs
 There is no Launch Splash screen, do not ask me to do anything about it, it relies on a component that cannot run through wine.

@@ -1,16 +1,16 @@
 app-id: com.midsreborn.MidsReborn
 runtime: org.freedesktop.Platform
-runtime-version: '23.08'
+runtime-version: '24.08'
 sdk: org.freedesktop.Sdk
 base: org.winehq.Wine
-base-version: stable-23.08
+base-version: stable-24.08
 command: mids.sh
 
 # Support 32-bit at runtime
 add-extensions:
     org.freedesktop.Platform.Compat.i386:
         directory: lib/i386-linux-gnu
-        version: '23.08'
+        version: '24.08'
 
 # Support 32-bit at buildtime
 sdk-extensions:
@@ -19,23 +19,24 @@ sdk-extensions:
     - org.freedesktop.Sdk.Extension.mono6
 
 inherit-extensions:
-  - org.freedesktop.Platform.GL32
+#  - org.freedesktop.Platform.GL32.default
   - org.freedesktop.Platform.ffmpeg-full
-  - org.freedesktop.Platform.ffmpeg_full.i386
-  - org.winehq.Wine.gecko
   - org.winehq.Wine.mono
-  - org.winehq.Wine.DLLs
+  - org.winehq.Wine.gecko
+#  - org.freedesktop.Platform.ffmpeg_full.i386
 
 finish-args:
     - --env=WINEDEBUG=-all
     - --share=ipc
     - --share=network
-    - --socket=x11
+    - --socket=fallback-x11
     - --socket=wayland
     - --socket=pulseaudio
     - --allow=multiarch
     - --talk-name=org.freedesktop.Flatpak
-    - --filesystem=host:rw
+    - --filesystem=host:create
+    - --device=dri
+    - --device=usb
     - --persist=~/.local/share/mids-flatpak
     - --env=LD_LIBRARY_PATH=/app/lib:/app/lib32:/app/lib64:/app/lib/i386-linux-gnu:/app/lib/wine:/app/lib64/wine
 

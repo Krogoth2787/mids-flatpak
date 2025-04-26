@@ -1,7 +1,0 @@
-[Desktop Entry]
-Name=MidsReborn
-Comment=A build planner for City of Heroes
-Exec=/usr/bin/flatpak run --branch=stable --arch=x86_64 com.midsreborn.MidsReborn
-Icon=MidsReborn
-Type=Application
-Categories=Game;
