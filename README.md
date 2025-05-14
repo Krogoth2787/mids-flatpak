@@ -14,7 +14,7 @@ It is installed from the .zip archive, so all databases are accessible.
 3. Ensure the Flatpak of wine is installed  
    - `Flatpak install org.winehq.Wine`
    - Select 1) 'flathub' (system)
-   - Select 2) 'app/org.winehq.Wine/x86_64/stable-23.08'
+   - Select 2) 'app/org.winehq.Wine/x86_64/stable-24.08'
 4. Run the command:  
    `Flatpak install --user MidsReborn.flatpak`
 
@@ -43,7 +43,9 @@ If an update occurs that prevents it from functioning, I will update this flatpa
 ### Change Notifications
 The previous issue with Flatpak 24.08, Wine and NVidia has been resolved, the flatpak has returned to the 24.08 base.
 
-The flatpak now includes the installation for Microsoft .Net8, so it can run MidsReborn 3.7.6. At the time of this update there are some known bugs in this version, so you may consider holding off on the 3.7.6 update until they are resolved.
+The flatpak now includes the installation for Microsoft .Net8, so it can run MidsReborn 3.7.11.2.
+
+MidsReborn now no longer requires the .Net6 Desktop Runtime, as such it has been removed from the Flatpak.
 
 ### Known Bugs
 There is no Launch Splash screen, do not ask me to do anything about it, it relies on a component that cannot run through wine.

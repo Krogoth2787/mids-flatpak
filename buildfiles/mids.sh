@@ -8,9 +8,6 @@ POE_INSTALLER_NAME="MRB_Release_3.7.11.2.zip"
 POE_SETUP="${WINEPREFIX}/${POE_INSTALLER_NAME}"
 POE_DOWNLOAD_URL="https://github.com/LoadedCamel/MidsReborn/releases/download/3.7.11.2/MRB_Release_3.7.11.2.zip"
 POE_RUN_CMD="${WINEPREFIX}/drive_c/users/${USER}/AppData/Roaming/LoadedCamel/MidsReborn/MidsReborn.exe"
-#DOTNET6_INSTALLER_NAME="windowsdesktop-runtime-6.0.35-win-x64.exe"
-#DOTNET6_SETUP="${WINEPREFIX}/${DOTNET6_INSTALLER_NAME}"
-#DOTNET6_DOWNLOAD_URL="https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/6.0.36/windowsdesktop-runtime-6.0.36-win-x64.exe"
 DOTNET8_INSTALLER_NAME="windowsdesktop-runtime-8.0.15-win-x64.exe"
 DOTNET8_SETUP="${WINEPREFIX}/${DOTNET8_INSTALLER_NAME=}"
 DOTNET8_DOWNLOAD_URL="https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/8.0.15/windowsdesktop-runtime-8.0.15-win-x64.exe"
@@ -59,12 +56,6 @@ first_run(){
     #set wine settings
     set_wine_settings
 
-    #download microsoft dotnet6
-    #if [ ! -f "${DOTNET6_SETUP}" ]; then
-    #    echo "Downloading Microsoft Dotnet6 Desktop Runtime"
-    #    curl -o "${DOTNET6_SETUP}" -L "${DOTNET6_DOWNLOAD_URL}"
-    #fi
-
     #download microsoft dotnet8
     if [ ! -f "${DOTNET8_SETUP}" ]; then
         echo "Downloading Microsoft Dotnet8 Desktop Runtime"
@@ -76,10 +67,6 @@ first_run(){
         echo "Downloading MidsReborn"
         curl -o "${POE_SETUP}" -L "${POE_DOWNLOAD_URL}"
     fi
-
-    #echo "Installing Microsoft Dotnet6 Runtime..."
-    #"${WINE}" "${DOTNET6_SETUP}"
-    #wait -n
 
     echo "Installing Microsoft Dotnet8 Runtime..."
     "${WINE}" "${DOTNET8_SETUP}"
