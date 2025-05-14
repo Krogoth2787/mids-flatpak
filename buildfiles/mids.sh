@@ -4,13 +4,13 @@ export WINEPREFIX="${HOME}/.local/share/mids-flatpak"
 export WINEDLLOVERRIDES="mscoree,mshtml"
 
 GIT_REPO="https://api.github.com/repos/Krogoth2787/mids-flatpak/contents"
-POE_INSTALLER_NAME="MRB_Release_3.7.4.8.zip"
+POE_INSTALLER_NAME="MRB_Release_3.7.11.2.zip"
 POE_SETUP="${WINEPREFIX}/${POE_INSTALLER_NAME}"
-POE_DOWNLOAD_URL="https://github.com/LoadedCamel/MidsReborn/releases/download/3.7.4.8/MRB_Release_3.7.4.8.zip"
+POE_DOWNLOAD_URL="https://github.com/LoadedCamel/MidsReborn/releases/download/3.7.11.2/MRB_Release_3.7.11.2.zip"
 POE_RUN_CMD="${WINEPREFIX}/drive_c/users/${USER}/AppData/Roaming/LoadedCamel/MidsReborn/MidsReborn.exe"
-DOTNET6_INSTALLER_NAME="windowsdesktop-runtime-6.0.35-win-x64.exe"
-DOTNET6_SETUP="${WINEPREFIX}/${DOTNET6_INSTALLER_NAME}"
-DOTNET6_DOWNLOAD_URL="https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/6.0.36/windowsdesktop-runtime-6.0.36-win-x64.exe"
+#DOTNET6_INSTALLER_NAME="windowsdesktop-runtime-6.0.35-win-x64.exe"
+#DOTNET6_SETUP="${WINEPREFIX}/${DOTNET6_INSTALLER_NAME}"
+#DOTNET6_DOWNLOAD_URL="https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/6.0.36/windowsdesktop-runtime-6.0.36-win-x64.exe"
 DOTNET8_INSTALLER_NAME="windowsdesktop-runtime-8.0.15-win-x64.exe"
 DOTNET8_SETUP="${WINEPREFIX}/${DOTNET8_INSTALLER_NAME=}"
 DOTNET8_DOWNLOAD_URL="https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/8.0.15/windowsdesktop-runtime-8.0.15-win-x64.exe"
@@ -19,13 +19,13 @@ WINE="/app/bin/wine"
 
 XORG_LOG="/var/log/Xorg.0.log"
 
-VERSION_NUM="0.5"
+VERSION_NUM="0.6"
 
 declare -ra WINE_PACKAGES=(corefonts liberation tahoma)
 declare -ra WINE_SETTINGS=('csmt=on' 'shader_backend=arb' 'win11' 'windowmanagerdecorated=y')
 
 echo "###############################################"
-echo "## MidReborn 3.7.4.8 Flatpak v${VERSION_NUM}            ##"
+echo "## MidReborn 3.7.11.2 Flatpak v${VERSION_NUM}           ##"
 echo "##             Packed by: Krogoth            ##"
 echo "###############################################"
 echo
@@ -53,17 +53,17 @@ first_run(){
 
 
 #    echo "${VERSION_NUM}" > "${VERSION_FILE}"
-    "${WINE}" "${DOTNET_SETUP}"
+    "${WINE}" "${DOTNET8_SETUP}"
     wait -n
 
     #set wine settings
     set_wine_settings
 
     #download microsoft dotnet6
-    if [ ! -f "${DOTNET6_SETUP}" ]; then
-        echo "Downloading Microsoft Dotnet6 Desktop Runtime"
-        curl -o "${DOTNET6_SETUP}" -L "${DOTNET6_DOWNLOAD_URL}"
-    fi
+    #if [ ! -f "${DOTNET6_SETUP}" ]; then
+    #    echo "Downloading Microsoft Dotnet6 Desktop Runtime"
+    #    curl -o "${DOTNET6_SETUP}" -L "${DOTNET6_DOWNLOAD_URL}"
+    #fi
 
     #download microsoft dotnet8
     if [ ! -f "${DOTNET8_SETUP}" ]; then
@@ -77,9 +77,9 @@ first_run(){
         curl -o "${POE_SETUP}" -L "${POE_DOWNLOAD_URL}"
     fi
 
-    echo "Installing Microsoft Dotnet6 Runtime..."
-    "${WINE}" "${DOTNET6_SETUP}"
-    wait -n
+    #echo "Installing Microsoft Dotnet6 Runtime..."
+    #"${WINE}" "${DOTNET6_SETUP}"
+    #wait -n
 
     echo "Installing Microsoft Dotnet8 Runtime..."
     "${WINE}" "${DOTNET8_SETUP}"

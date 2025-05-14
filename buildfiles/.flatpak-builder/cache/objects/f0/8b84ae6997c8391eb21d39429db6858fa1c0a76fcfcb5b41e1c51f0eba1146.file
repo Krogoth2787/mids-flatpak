@@ -1,0 +1,133 @@
+{
+  "id" : "com.midsreborn.MidsReborn",
+  "runtime" : "org.freedesktop.Platform",
+  "runtime-version" : "24.08",
+  "runtime-commit" : "69f5ca3180618e77eb1264af2b67048fc1c6a2884ee403c76b24b0e15bfc16c9",
+  "sdk" : "org.freedesktop.Sdk",
+  "sdk-commit" : "d181b96848f53d6fb748322c4166cfa4880062e1b28ee0504ab5eabaa84bba9c",
+  "base" : "org.winehq.Wine",
+  "base-version" : "stable-24.08",
+  "base-commit" : "d23dbf5d745d59fe8aae9dc85d27fff2d2915b6bb9d739fca09b9e5c3b55e3cb",
+  "command" : "mids.sh",
+  "modules" : [
+    {
+      "name" : "compat",
+      "buildsystem" : "simple",
+      "build-commands" : [
+        "mkdir -p /app/lib/i386-linux-gnu",
+        "mkdir -p /app/lib/debug/lib/i386-linux-gnu",
+        "mkdir -p /app/lib/udev/rules.d",
+        "mkdir -p /app/extensions/Plugins",
+        "mkdir -p /app/lib64",
+        "mkdir -p /app/lib32"
+      ]
+    },
+    {
+      "name" : "segoe",
+      "buildsystem" : "simple",
+      "sources" : [
+        {
+          "path" : "segoeui.zip",
+          "type" : "file"
+        }
+      ],
+      "build-commands" : [
+        "unzip -q segoeui.zip -d /app/share/wine/fonts"
+      ]
+    },
+    {
+      "name" : "midsinstaller",
+      "buildsystem" : "simple",
+      "sources" : [
+        {
+          "path" : "mids.sh",
+          "type" : "file"
+        },
+        {
+          "path" : "com.midsreborn.MidsReborn.png",
+          "type" : "file"
+        },
+        {
+          "path" : "com.midsreborn.MidsReborn.desktop",
+          "type" : "file"
+        },
+        {
+          "path" : "com.midsreborn.MidsReborn.metainfo.xml",
+          "type" : "file"
+        }
+      ],
+      "build-commands" : [
+        "install -Dm755 mids.sh /app/bin",
+        "install -Dm644 com.midsreborn.MidsReborn.png /app/share/icons/hicolor/512x512/apps/com.midsreborn.MidsReborn.png",
+        "install -D --mode=644 com.midsreborn.MidsReborn.desktop /app/share/applications/com.midsreborn.MidsReborn.desktop",
+        "install -Dm644 com.midsreborn.MidsReborn.metainfo.xml /app/share/metainfo/com.midsreborn.MidsReborn.metainfo.xml"
+      ]
+    }
+  ],
+  "cleanup" : [
+    "*.a",
+    "/lib/debug",
+    "/lib32/debug",
+    "/lib64/debug",
+    "/share/man",
+    "/include",
+    "/share/applications/winetricks.desktop",
+    "/app/share/applications/winetricks.desktop",
+    "/app/explorer++/\"*.txt\"",
+    "/bin/function_grep.pl",
+    "/bin/widl",
+    "/bin/wine64-preloader",
+    "/bin/winebuild",
+    "/bin/wineconsole",
+    "/bin/winedbg",
+    "/bin/winefile",
+    "/bin/winegcc",
+    "/bin/winemine",
+    "/bin/wrc",
+    "/bin/msidb",
+    "/bin/notepad",
+    "/bin/regsvr32",
+    "/bin/wineboot",
+    "/bin/winecfg",
+    "/bin/winecpp",
+    "/bin/winedump",
+    "/bin/wineg++",
+    "/bin/winemaker",
+    "/bin/winepath",
+    "/bin/wmc",
+    "/include",
+    "/share/man"
+  ],
+  "sdk-extensions" : [
+    "org.freedesktop.Sdk.Compat.i386",
+    "org.freedesktop.Sdk.Extension.toolchain-i386",
+    "org.freedesktop.Sdk.Extension.mono6"
+  ],
+  "finish-args" : [
+    "--env=WINEDEBUG=-all",
+    "--share=ipc",
+    "--share=network",
+    "--socket=fallback-x11",
+    "--socket=wayland",
+    "--socket=pulseaudio",
+    "--allow=multiarch",
+    "--talk-name=org.freedesktop.Flatpak",
+    "--filesystem=host:create",
+    "--device=dri",
+    "--device=usb",
+    "--persist=~/.local/share/mids-flatpak",
+    "--env=LD_LIBRARY_PATH=/app/lib:/app/lib32:/app/lib64:/app/lib/i386-linux-gnu:/app/lib/wine:/app/lib64/wine"
+  ],
+  "inherit-extensions" : [
+    "org.freedesktop.Platform.ffmpeg-full",
+    "org.winehq.Wine.mono",
+    "org.winehq.Wine.gecko"
+  ],
+  "add-extensions" : {
+    "org.freedesktop.Platform.Compat.i386" : {
+      "directory" : "lib/i386-linux-gnu",
+      "version" : "24.08"
+    }
+  },
+  "source-date-epoch" : 1745639133
+}
